@@ -18,6 +18,7 @@ from dataset import InductiveLPDataset
 set_random_seed(42)
 
 @click.command()
+@click.option('-ds', '--dataset_size', type=str, default="small")  # or large
 @click.option('-dim', '--embedding_dim', type=int, default=100)
 @click.option('-tokens', '--tokens_per_node', type=int, default=5)
 @click.option('-lr', '--learning_rate', type=float, default=0.0005)
@@ -29,6 +30,7 @@ set_random_seed(42)
 @click.option('-save', '--save_model', type=bool, default=False)
 @click.option('-gnn', '--gnn', type=bool, default=False)  # for the Inductive NodePiece GNN baseline
 def main(
+        dataset_size: str,
         embedding_dim: int,
         tokens_per_node: int,
         learning_rate: float,
@@ -42,7 +44,7 @@ def main(
 ):
 
     # dataset loading
-    dataset = InductiveLPDataset()
+    dataset = InductiveLPDataset(size=dataset_size)
     loss = NSSALoss(margin=margin)
 
     # we have two baselines: InductiveNodePiece and InductiveNodePieceGNN

@@ -1,17 +1,17 @@
 from pykeen.datasets.inductive.base import DisjointInductivePathDataset
 
 class InductiveLPDataset(DisjointInductivePathDataset):
-    train_path = "./data/train.txt"
-    inference_path = "./data/inference.txt"
-    inference_val_path = "./data/inference_validation.txt"
-    inference_test_path = "./data/inference_test.txt"
+    root_path = "./data/"
 
-    def __init__(self, **kwargs):
+    def __init__(self, size: str = "small", **kwargs):
+        """
+        :param size: "small" or "large"
+        """
         super().__init__(
-            transductive_training_path=self.train_path,
-            inductive_inference_path=self.inference_path,
-            inductive_validation_path=self.inference_val_path,
-            inductive_testing_path=self.inference_test_path,
+            transductive_training_path=self.root_path+f"{size}"+"/train.txt",
+            inductive_inference_path=self.root_path+f"{size}"+"/inference.txt",
+            inductive_validation_path=self.root_path+f"{size}"+"/inference_validation.txt",
+            inductive_testing_path=self.root_path+f"{size}"+"/inference_test.txt",
             create_inverse_triples=True,
             eager=True,
             **kwargs
