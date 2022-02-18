@@ -62,7 +62,11 @@ def main(
     print(f"Number of parameters: {sum(p.numel() for p in model.parameters())}")
 
     if wandb:
-        tracker = WANDBResultTracker(project="inductive_ilp", entity="pykeen")  # put here your project and entity
+        tracker = WANDBResultTracker(
+            project="inductive_ilp",  # put here your project and entity
+            entity="pykeen",
+            config=click.get_current_context().params
+        )
         tracker.start_run()
     else:
         tracker = ConsoleResultTracker()
