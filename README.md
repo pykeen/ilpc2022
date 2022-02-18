@@ -46,6 +46,17 @@ The dataset in `./data` consists of 4 splits:
 * `inductive_test.txt` - test set of triples to predict, uses entities from the **inference** graph
 * a held-out test set of triples - kept by the organizers for the final ranking 😉 , uses entities from the **inference** graph
 
+Stats:
+
+| Split                | Entities | Relations         | Triples |
+|----------------------|----------|-------------------|---------|
+| Train                | 46,626   | 130               | 202,446 |
+| Inference            | 29,246   | 130 (subset)      | 77,044  |
+| Inference validation | 29,246   | 130 (subset)      | 10,179  |
+| Inference test       | 29,246   | 130 (subset)      | 10,184  |
+| Held-out test set    | 29,246   | 130 (subset)      | 10,172  |
+
+
 ## Baselines
 
 Training shallow entity embeddings in this setup is useless as trained embeddings cannot be used for inference over unseen entities.
