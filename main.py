@@ -4,10 +4,10 @@ import click
 from pykeen.training import SLCWATrainingLoop, LCWATrainingLoop
 from pykeen.evaluation import RankBasedEvaluator
 from pykeen.losses import NSSALoss
+from pykeen.stoppers import EarlyStopper
 from pykeen.models.inductive import InductiveNodePiece, InductiveNodePieceGNN
 from pykeen.trackers import WANDBResultTracker
 from pykeen.typing import TRAINING, VALIDATION, TESTING
-from pykeen.utils import resolve_device
 
 from torch.optim import Adam
 
@@ -56,7 +56,6 @@ def main(
         num_tokens=tokens_per_node,
         aggregation="mlp",
         loss=loss,
-        device=resolve_device(),
     )
     optimizer = Adam(params=model.parameters(), lr=learning_rate)
     print(f"Number of parameters: {sum(p.numel() for p in model.parameters())}")
