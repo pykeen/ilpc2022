@@ -6,8 +6,9 @@ from pykeen.evaluation import RankBasedEvaluator
 from pykeen.losses import NSSALoss
 from pykeen.stoppers import EarlyStopper
 from pykeen.models.inductive import InductiveNodePiece, InductiveNodePieceGNN
-from pykeen.trackers import WANDBResultTracker
+from pykeen.trackers import WANDBResultTracker, ConsoleResultTracker
 from pykeen.typing import TRAINING, VALIDATION, TESTING
+from pykeen.utils import resolve_device
 
 from torch.optim import Adam
 
@@ -56,9 +57,15 @@ def main(
         num_tokens=tokens_per_node,
         aggregation="mlp",
         loss=loss,
-    )
+    ).to(resolve_device())
     optimizer = Adam(params=model.parameters(), lr=learning_rate)
     print(f"Number of parameters: {sum(p.numel() for p in model.parameters())}")
+
+    if wandb:
+        tracker = WANDBResultTracker(project="inductive_ilp", entity="pykeen")  # put here your project and entity
+        tracker.start_run()
+    else:
+        tracker = ConsoleResultTracker()
 
     # default training regime is negative sampling (SLCWA)
     # you can also use the 1-N regime with the LCWATrainingLoop
@@ -67,6 +74,7 @@ def main(
         triples_factory=dataset.transductive_training,
         model=model,
         optimizer=optimizer,
+        result_tracker=tracker,
         negative_sampler_kwargs=dict(num_negs_per_pos=num_negatives),  # affects training speed, the more - the better
         mode=TRAINING  # must be specified for the inductive setup
     )
@@ -74,12 +82,6 @@ def main(
     # specifying hits@k values: 1, 3, 5, 10, 100
     valid_evaluator = RankBasedEvaluator(mode=VALIDATION, ks=(1, 3, 5, 10, 100))
     test_evaluator = RankBasedEvaluator(mode=TESTING, ks=(1, 3, 5, 10, 100))
-
-    if wandb:
-        tracker = WANDBResultTracker(project="inductive_ilp", entity="pykeen")  # put here your project and entity
-        tracker.start_run()
-    else:
-        tracker = "console"
 
     # model training and eval on validation starts here
     training_loop.train(
@@ -91,7 +93,6 @@ def main(
         callback_kwargs=dict(
             evaluator=valid_evaluator,
             evaluation_triples=dataset.inductive_validation.mapped_triples,
-            tracker=tracker,
             prefix="training",
             frequency=1,
             additional_filter_triples=dataset.inductive_inference.mapped_triples,
