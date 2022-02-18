@@ -71,34 +71,32 @@ def main(
         mode=TRAINING  # must be specified for the inductive setup
     )
 
-    valid_evaluator = RankBasedEvaluator(mode=VALIDATION)
-    test_evaluator = RankBasedEvaluator(mode=TESTING)
+    # specifying hits@k values: 1, 3, 5, 10, 100
+    valid_evaluator = RankBasedEvaluator(mode=VALIDATION, ks=(1, 3, 5, 10, 100))
+    test_evaluator = RankBasedEvaluator(mode=TESTING, ks=(1, 3, 5, 10, 100))
 
     if wandb:
         tracker = WANDBResultTracker(project="inductive_ilp", entity="pykeen")  # put here your project and entity
         tracker.start_run()
     else:
-        tracker = None
-
-    # we don't actually use the early stopper here by setting the patience to 100000
-    early_stopper = EarlyStopper(
-        model=model,
-        relative_delta=0.0005,
-        training_triples_factory=dataset.inductive_inference,
-        evaluation_triples_factory=dataset.inductive_validation,
-        frequency=1,
-        patience=100000,
-        result_tracker=tracker,
-        evaluation_batch_size=batch_size,
-        evaluator=valid_evaluator,
-    )
+        tracker = "console"
 
     # model training and eval on validation starts here
     training_loop.train(
         triples_factory=dataset.transductive_training,
-        stopper=early_stopper,
+        stopper=None,
         num_epochs=num_epochs,
-        batch_size=batch_size
+        batch_size=batch_size,
+        callbacks="evaluation",
+        callback_kwargs=dict(
+            evaluator=valid_evaluator,
+            evaluation_triples=dataset.inductive_validation.mapped_triples,
+            tracker=tracker,
+            prefix="training",
+            frequency=1,
+            additional_filter_triples=dataset.inductive_inference.mapped_triples,
+            batch_size=batch_size,
+        ),
     )
 
     # final eval on the test set
@@ -115,7 +113,7 @@ def main(
     # extracting final metrics
     results_dict = result.to_dict()
     print(f"Test MRR {results_dict['inverse_harmonic_mean_rank']['both']['realistic']:.5f}")
-    for k in [10, 5, 3, 1]:
+    for k in [100, 10, 5, 3, 1]:
         print(f"Test Hits@{k} {results_dict['hits_at_k']['both']['realistic'][k]:.5f}")
     print(f"Test Arithmetic Mean Rank {results_dict['arithmetic_mean_rank']['both']['realistic']:.5f}")
 
