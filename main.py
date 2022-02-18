@@ -8,14 +8,14 @@ from pykeen.stoppers import EarlyStopper
 from pykeen.models.inductive import InductiveNodePiece, InductiveNodePieceGNN
 from pykeen.trackers import WANDBResultTracker, ConsoleResultTracker
 from pykeen.typing import TRAINING, VALIDATION, TESTING
-from pykeen.utils import resolve_device
+from pykeen.utils import resolve_device, set_random_seed
 
 from torch.optim import Adam
 
 from dataset import InductiveLPDataset
 
 # fix the seed for reproducibility
-torch.manual_seed(42)
+set_random_seed(42)
 
 @click.command()
 @click.option('-dim', '--embedding_dim', type=int, default=100)
