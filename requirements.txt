@@ -1,0 +1,4 @@
+torch >= 1.10
+pykeen >= 1.8.0
+tqdm
+wandb
