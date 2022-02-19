@@ -79,7 +79,7 @@ We can afford tokenizing the nodes in the *inference* graph since the set of rel
 
 We offer here 2 baselines:
 * `InductiveNodePiece` - plain tokenizer + tokens MLP encoder to bootstrap node representations. Fast.
-* `InductiveNodePieceGNN` - everything above + an additional 2-layer [CompGCN](https://arxiv.org/abs/1911.03082) message passing encoder with the attention mechanism. Slower but attains higher performance.
+* `InductiveNodePieceGNN` - everything above + an additional 2-layer [CompGCN](https://arxiv.org/abs/1911.03082) message passing encoder. Slower but attains higher performance.
 
 For more information on the models check out the [PyKEEN tutorial](https://pykeen.readthedocs.io/en/latest/tutorial/inductive_lp.html) on inductive link prediction with NodePiece
 
@@ -104,11 +104,11 @@ Options:
   -gnn, --gnn BOOLEAN  # for activating InductiveNodePieceGNN
 ```
 
-## Baselines Performance
+## Baselines Performance on Public Test
 
 Evaluation metrics ([more documentation](https://pykeen.readthedocs.io/en/stable/tutorial/understanding_evaluation.html)): 
 * MRR (Inverse Harmonic Mean Rank) - higher is better
-* Hits @ 100
+* Hits @ 100 - higher is better
 * Hits @ 10
 * Hits @ 5
 * Hits @ 3
@@ -119,17 +119,17 @@ Evaluation metrics ([more documentation](https://pykeen.readthedocs.io/en/stable
 ### Small Dataset
 
 
-| **Model**                | MRR    | H@100  | H@10   | H@5    | H@3    | H@1   | MR   | AMR   |
-|--------------------------|--------|--------|--------|--------|--------|-------|------|-------|
-| InductiveNodePieceGNN    |        |        |        |        |        |       |      |       |
-| InductiveNodePiece (32d) | 0.0381 | 0.4678 | 0.0917 | 0.0500 | 0.0219 | 0.007 | 1088 | 0.334 |
+| **Model**                | MRR        | H@100  | H@10       | H@5        | H@3        | H@1        | MR      | AMR       |
+|--------------------------|------------|--------|------------|------------|------------|------------|---------|-----------|
+| InductiveNodePieceGNN    | **0.1326** | 0.4705 | **0.2509** | **0.1899** | **0.1396** | **0.0763** | **881** | **0.270** |
+| InductiveNodePiece (32d) | 0.0381     | 0.4678 | 0.0917     | 0.0500     | 0.0219     | 0.007      | 1088    | 0.334     |
 
 Configs:
-* InductiveNodePieceGNN
+* InductiveNodePieceGNN (32d, 50 epochs, 24K params) - NodePiece (5 tokens per node, MLP aggregator) + 2-layer CompGCN with DistMult composition function + DistMult decoder. Training time: **77 min***
 ```shell
-
+main.py -dim 32 -e 50 -negs 16 -m 2.0 -lr 0.0001 --gnn True
 ```
-* InductiveNodePiece (32d, 50 epochs, 15.5K params) - NodePiece + DistMult decoder
+* InductiveNodePiece (32d, 50 epochs, 15.5K params) - NodePiece (5 tokens per node, MLP aggregator) + DistMult decoder. Training time: **6 min***
 ```shell
 main.py -dim 32 -e 50 -negs 16 -m 5.0 -lr 0.0001
 ```
@@ -146,15 +146,17 @@ Configs:
 ```shell
 
 ```
-* InductiveNodePiece (32d, 50 epochs, 15.5K params)
+* InductiveNodePiece (32d, 17 epochs, 15.5K params) - NodePiece (5 tokens per node, MLP aggregator) + DistMult decoder
 ```shell
 main.py -dim 32 -e 17 -negs 16 -m 15.0 -lr 0.0001 -ds large
 ```
+
+\* Note: All models were trained on a single RTX 8000. Average memory consumption during training is about 2 GB VRAM on the `small` dataset and about 3 GB on `large`.  
 ## Submissions
 
 1. Fork the repo
 2. Train your inductive link prediction model
 3. Save the model weights using the `--save True` flag
 4. Upload model weights on GitHub or other platforms (Dropbox, Google Drive, etc)
-5. Open an issue in **this** repo with the link to your repo and model weights
+5. Open an issue in **this** repo with the link to your repo, performance metrics, and model weights
 
