@@ -119,10 +119,27 @@ Evaluation metrics ([more documentation](https://pykeen.readthedocs.io/en/stable
 ### Small Dataset
 
 
-| **Model**                | MRR    | H@100  | H@10   | H@5    | H@3    | H@1    | MR   | AMR   |
-|--------------------------|--------|--------|--------|--------|--------|--------|------|-------|
-| InductiveNodePieceGNN    |        |        |        |        |        |        |      |       |
-| InductiveNodePiece (32d) | 0.0381 | 0.4678 | 0.0917 | 0.0500 | 0.0219 | 0.0007 | 1088 | 0.334 |
+| **Model**                | MRR    | H@100  | H@10   | H@5    | H@3    | H@1   | MR   | AMR   |
+|--------------------------|--------|--------|--------|--------|--------|-------|------|-------|
+| InductiveNodePieceGNN    |        |        |        |        |        |       |      |       |
+| InductiveNodePiece (32d) | 0.0381 | 0.4678 | 0.0917 | 0.0500 | 0.0219 | 0.007 | 1088 | 0.334 |
+
+Configs:
+* InductiveNodePieceGNN
+```shell
+
+```
+* InductiveNodePiece (32d, 50 epochs, 15.5K params) - NodePiece + DistMult decoder
+```shell
+main.py -dim 32 -e 50 -negs 16 -m 5.0 -lr 0.0001
+```
+
+### Large Dataset
+
+| **Model**                | MRR    | H@100 | H@10   | H@5    | H@3    | H@1    | MR   | AMR   |
+|--------------------------|--------|-------|--------|--------|--------|--------|------|-------|
+| InductiveNodePieceGNN    |        |       |        |        |        |        |      |       |
+| InductiveNodePiece (32d) | 0.0651 | 0.287 | 0.1246 | 0.0809 | 0.0542 | 0.0373 | 5078 | 0.354 |
 
 Configs:
 * InductiveNodePieceGNN
@@ -131,17 +148,8 @@ Configs:
 ```
 * InductiveNodePiece (32d, 50 epochs, 15.5K params)
 ```shell
-main.py -dim 32 -e 50 -negs 16 -m 5.0 -lr 0.0001
+main.py -dim 32 -e 17 -negs 16 -m 15.0 -lr 0.0001 -ds large
 ```
-
-### Large Dataset
-
-| **Model**             | MRR  | Hits @ 10 | Hits @ 5 | Hits @ 3 | Hits @ 1 | Mean Rank |
-|-----------------------| -------------------------------- | --------- | -------- | -------- | -------- | --------- |
-| InductiveNodePieceGNN |                                  |           |          |          |          |           |
-| InductiveNodePiece    |                                  |           |          |          |          |           |
-
-
 ## Submissions
 
 1. Fork the repo

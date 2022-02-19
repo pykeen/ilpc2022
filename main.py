@@ -123,6 +123,7 @@ def main(
     for k in [100, 10, 5, 3, 1]:
         print(f"Test Hits@{k} {results_dict['hits_at_k']['both']['realistic'][k]:.5f}")
     print(f"Test Arithmetic Mean Rank {results_dict['arithmetic_mean_rank']['both']['realistic']:.5f}")
+    print(f"Test Adjusted Arithmetic Mean Rank {results_dict['adjusted_arithmetic_mean_rank']['both']['realistic']:.5f}")
 
     # you can also log the final results to wandb if you want
     if wandb:
