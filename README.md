@@ -91,6 +91,7 @@ CLI arguments:
 Usage: main.py [OPTIONS]
 
 Options:
+  -ds, --dataset_size TEXT   # "small" or "large"
   -dim, --embedding_dim INTEGER  
   -tokens, --tokens_per_node INTEGER  # for NodePiece
   -lr, --learning_rate FLOAT
