@@ -1,10 +1,10 @@
 # KG Course Competition on Inductive Link Prediction
 
 This inductive link prediction competition accompanies the [KG Course](https://github.com/migalkin/kgcourse2021) and 
-welcomes students' attempts to improve the link prediction performance on a newly constructed dataset.
+welcomes students' attempts to improve the link prediction performance on two newly constructed datasets.
 
 This repo contains:
-* The dataset in the `./data` folder
+* The datasets in the `./data` folder
 * A boilerplate code with 2 baselines that you can base your implementations on
 
 ## Installation
@@ -39,14 +39,25 @@ Here is the schematic description of the task:
 
 ![](https://pykeen.readthedocs.io/en/latest/_images/ilp_1.png)
 
-The dataset in `./data` consists of 4 splits:
+Here, we provide 2 inductive LP datasets. Each dataset in `./data` consists of 4 splits:
 * `train.txt` - the training graph on which you are supposed to train a model
 * `inference.txt` - the inductive inference graph **disjoint** with the training one - that is, it has a new non-overlapping set of entities, the missing links are sampled from this graph
 * `inductive_validation.txt` - validation set of triples to predict, uses entities from the **inference** graph
 * `inductive_test.txt` - test set of triples to predict, uses entities from the **inference** graph
 * a held-out test set of triples - kept by the organizers for the final ranking 😉 , uses entities from the **inference** graph
 
-Stats:
+`small` dataset stats:
+
+| Split                | Entities | Relations         | Triples |
+|----------------------|----------|-------------------|---------|
+| Train                | 46,626   | 130               | 202,446 |
+| Inference            | 29,246   | 130 (subset)      | 77,044  |
+| Inference validation | 29,246   | 130 (subset)      | 10,179  |
+| Inference test       | 29,246   | 130 (subset)      | 10,184  |
+| Held-out test set    | 29,246   | 130 (subset)      | 10,172  |
+
+
+`large` dataset stats:
 
 | Split                | Entities | Relations         | Triples |
 |----------------------|----------|-------------------|---------|
@@ -94,7 +105,37 @@ Options:
 
 ## Baselines Performance
 
-| **Model**             | MRR (Inverse Harmonic Mean Rank) | Hits @ 10 | Hits @ 5 | Hits @ 3 | Hits @ 1 | Mean Rank |
+Evaluation metrics ([more documentation](https://pykeen.readthedocs.io/en/stable/tutorial/understanding_evaluation.html)): 
+* MRR (Inverse Harmonic Mean Rank) - higher is better
+* Hits @ 100
+* Hits @ 10
+* Hits @ 5
+* Hits @ 3
+* Hits @ 1
+* MR (Mean Rank) - lower is better
+* Adjusted Arithmetic Mean Rank (AMR) - lower in better
+
+### Small Dataset
+
+
+| **Model**                | MRR    | H@100  | H@10   | H@5    | H@3    | H@1    | MR   | AMR   |
+|--------------------------|--------|--------|--------|--------|--------|--------|------|-------|
+| InductiveNodePieceGNN    |        |        |        |        |        |        |      |       |
+| InductiveNodePiece (32d) | 0.0381 | 0.4678 | 0.0917 | 0.0500 | 0.0219 | 0.0007 | 1088 | 0.334 |
+
+Configs:
+* InductiveNodePieceGNN
+```shell
+
+```
+* InductiveNodePiece (32d, 50 epochs, 15.5K params)
+```shell
+main.py -dim 32 -e 50 -negs 16 -m 5.0 -lr 0.0001
+```
+
+### Large Dataset
+
+| **Model**             | MRR  | Hits @ 10 | Hits @ 5 | Hits @ 3 | Hits @ 1 | Mean Rank |
 |-----------------------| -------------------------------- | --------- | -------- | -------- | -------- | --------- |
 | InductiveNodePieceGNN |                                  |           |          |          |          |           |
 | InductiveNodePiece    |                                  |           |          |          |          |           |
