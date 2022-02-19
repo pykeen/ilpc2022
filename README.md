@@ -48,13 +48,13 @@ Here, we provide 2 inductive LP datasets. Each dataset in `./data` consists of 4
 
 `small` dataset stats:
 
-| Split                | Entities | Relations         | Triples |
-|----------------------|----------|-------------------|---------|
-| Train                | 46,626   | 130               | 202,446 |
-| Inference            | 29,246   | 130 (subset)      | 77,044  |
-| Inference validation | 29,246   | 130 (subset)      | 10,179  |
-| Inference test       | 29,246   | 130 (subset)      | 10,184  |
-| Held-out test set    | 29,246   | 130 (subset)      | 10,172  |
+| Split                | Entities  | Relations   | Triples |
+|----------------------|-----------|-------------|---------|
+| Train                | 10,230    | 96          | 78,616  |
+| Inference            | 6,653     | 96 (subset) | 20,960  |
+| Inference validation | 6,653     | 96 (subset) | 2,908   |
+| Inference test       | 6,653     | 96 (subset) | 2,902   |
+| Held-out test set    | 6,653     | 96 (subset) | 2,894   |
 
 
 `large` dataset stats:
