@@ -18,7 +18,10 @@ from dataset import InductiveLPDataset
 set_random_seed(42)
 
 # for GNN layer reproducibility
-torch.use_deterministic_algorithms(True)
+# when running on a GPU, make sure to set up an env variable as advised in the doc:
+# https://pytorch.org/docs/stable/generated/torch.use_deterministic_algorithms.html
+
+# torch.use_deterministic_algorithms(True)
 
 @click.command()
 @click.option('-ds', '--dataset_size', type=str, default="small")  # or large
