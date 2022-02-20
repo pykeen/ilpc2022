@@ -17,6 +17,9 @@ from dataset import InductiveLPDataset
 # fix the seed for reproducibility
 set_random_seed(42)
 
+# for GNN layer reproducibility
+torch.use_deterministic_algorithms(True)
+
 @click.command()
 @click.option('-ds', '--dataset_size', type=str, default="small")  # or large
 @click.option('-dim', '--embedding_dim', type=int, default=100)
@@ -99,7 +102,7 @@ def main(
         callback_kwargs=dict(
             evaluator=valid_evaluator,
             evaluation_triples=dataset.inductive_validation.mapped_triples,
-            prefix="training",
+            prefix="validation",
             frequency=1,
             additional_filter_triples=dataset.inductive_inference.mapped_triples,
             batch_size=batch_size,
@@ -135,7 +138,7 @@ def main(
 
     # saving the final model
     if save_model:
-        model.save_state("./data/model.pth")
+        torch.save(model, "./data/model.pth")
 
 
 if __name__ == "__main__":
