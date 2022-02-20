@@ -104,7 +104,7 @@ Options:
   -gnn, --gnn BOOLEAN  # for activating InductiveNodePieceGNN
 ```
 
-## Baselines Performance on Public Test
+## Performance on Public Test
 
 Evaluation metrics ([more documentation](https://pykeen.readthedocs.io/en/stable/tutorial/understanding_evaluation.html)): 
 * MRR (Inverse Harmonic Mean Rank) - higher is better
@@ -119,10 +119,10 @@ Evaluation metrics ([more documentation](https://pykeen.readthedocs.io/en/stable
 ### Small Dataset
 
 
-| **Model**                | MRR        | H@100  | H@10       | H@5        | H@3        | H@1        | MR      | AMR       |
-|--------------------------|------------|--------|------------|------------|------------|------------|---------|-----------|
-| InductiveNodePieceGNN    | **0.1326** | 0.4705 | **0.2509** | **0.1899** | **0.1396** | **0.0763** | **881** | **0.270** |
-| InductiveNodePiece (32d) | 0.0381     | 0.4678 | 0.0917     | 0.0500     | 0.0219     | 0.007      | 1088    | 0.334     |
+| **Model**             | MRR        | H@100  | H@10       | H@5        | H@3        | H@1        | MR      | AMR       |
+|-----------------------|------------|--------|------------|------------|------------|------------|---------|-----------|
+| InductiveNodePieceGNN | **0.1326** | 0.4705 | **0.2509** | **0.1899** | **0.1396** | **0.0763** | **881** | **0.270** |
+| InductiveNodePiece    | 0.0381     | 0.4678 | 0.0917     | 0.0500     | 0.0219     | 0.007      | 1088    | 0.334     |
 
 Configs:
 * InductiveNodePieceGNN (32d, 50 epochs, 24K params) - NodePiece (5 tokens per node, MLP aggregator) + 2-layer CompGCN with DistMult composition function + DistMult decoder. Training time: **77 min***
@@ -136,17 +136,17 @@ main.py -dim 32 -e 50 -negs 16 -m 5.0 -lr 0.0001
 
 ### Large Dataset
 
-| **Model**                | MRR    | H@100 | H@10   | H@5    | H@3    | H@1    | MR   | AMR   |
-|--------------------------|--------|-------|--------|--------|--------|--------|------|-------|
-| InductiveNodePieceGNN    |        |       |        |        |        |        |      |       |
-| InductiveNodePiece (32d) | 0.0651 | 0.287 | 0.1246 | 0.0809 | 0.0542 | 0.0373 | 5078 | 0.354 |
+| **Model**             | MRR    | H@100     | H@10       | H@5        | H@3        | H@1    | MR       | AMR       |
+|-----------------------|--------|-----------|------------|------------|------------|--------|----------|-----------|
+| InductiveNodePieceGNN | 0.0705 | **0.374** | **0.1458** | **0.0990** | **0.0730** | 0.0319 | **4566** | **0.318** |
+| InductiveNodePiece    | 0.0651 | 0.287     | 0.1246     | 0.0809     | 0.0542     | 0.0373 | 5078     | 0.354     |
 
 Configs:
-* InductiveNodePieceGNN
+* InductiveNodePieceGNN (32d, 53 epochs, 24K params) - NodePiece (5 tokens per node, MLP aggregator) + 2-layer CompGCN with DistMult composition function + DistMult decoder. Training time: **8 hours***
 ```shell
-
+main.py -dim 32 -e 53 -negs 16 -m 20.0 -lr 0.0001 -ds large --gnn True
 ```
-* InductiveNodePiece (32d, 17 epochs, 15.5K params) - NodePiece (5 tokens per node, MLP aggregator) + DistMult decoder
+* InductiveNodePiece (32d, 17 epochs, 15.5K params) - NodePiece (5 tokens per node, MLP aggregator) + DistMult decoder. Training time: **5 min***
 ```shell
 main.py -dim 32 -e 17 -negs 16 -m 15.0 -lr 0.0001 -ds large
 ```
