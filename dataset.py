@@ -7,7 +7,8 @@ __all__ = [
     "InductiveLPDataset",
 ]
 
-DATA = Path(__file__).parent.parent.resolve().join("data")
+HERE = Path(__file__).parent.resolve()
+DATA = HERE.joinpath("data")
 
 Size = Literal["small", "large"]
 

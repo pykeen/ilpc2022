@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import click
 import torch
 from pykeen.evaluation import RankBasedEvaluator
@@ -10,6 +12,9 @@ from pykeen.utils import resolve_device, set_random_seed
 from torch.optim import Adam
 
 from dataset import InductiveLPDataset
+
+HERE = Path(__file__).parent.resolve()
+DATA = HERE.joinpath("data")
 
 # fix the seed for reproducibility
 set_random_seed(42)
@@ -141,7 +146,7 @@ def main(
 
     # saving the final model
     if save_model:
-        torch.save(model, "./data/model.pth")
+        torch.save(model, DATA.joinpath("model.pth"))
 
 
 if __name__ == "__main__":
