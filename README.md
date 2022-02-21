@@ -85,26 +85,38 @@ We offer here 2 baselines:
 
 For more information on the models check out the [PyKEEN tutorial](https://pykeen.readthedocs.io/en/latest/tutorial/inductive_lp.html) on inductive link prediction with NodePiece
 
-Both baselines are implemented in the `main.py`. 
+Both baselines are implemented in the `main.py`.
 
-CLI arguments:
+<details>
+<summary>
+Run `python main.py --help` to show the available options and their default values:
+</summary>
 
 ```shell
 Usage: main.py [OPTIONS]
 
 Options:
-  -ds, --dataset-size TEXT   # "small" or "large"
-  -dim, --embedding-dim INTEGER  
-  -tokens, --tokens-per-node INTEGER  # for NodePiece
-  -lr, --learning-rate FLOAT
-  -m, --margin FLOAT  # for the margin loss and SLCWA training
-  -negs, --num-negatives INTEGER  # negative samples per positive in the SLCWA regime 
-  -b, --batch-size INTEGER
-  -e, --num-epochs INTEGER
-  -wandb, --wandb BOOLEAN
-  -save, --save-model BOOLEAN
-  -gnn, --gnn BOOLEAN  # for activating InductiveNodePieceGNN
+  --dataset [small|large]     [default: small]
+  --embedding-dim INTEGER     The dimension of the entity embeddings
+                              [default: 100]
+  --tokens INTEGER            Number of tokens to use in NodePiece  [default:
+                              5]
+  -lr, --learning-rate FLOAT  [default: 0.0005]
+  -m, --margin FLOAT          for the margin loss and SLCWA training
+                              [default: 15.0]
+  --num-negatives INTEGER     negative samples per positive in the SLCWA
+                              regime  [default: 4]
+  -b, --batch-size INTEGER    [default: 256]
+  -e, --epochs INTEGER        The number of training epochs  [default: 100]
+  --wandb                     Track results with Weights & Biases
+  --save                      Save the model in the
+                              /Users/cthoyt/dev/kgcourse_competition/data
+                              directory
+  --gnn                       Use the Inductive NodePiece model with GCN
+                              layers
 ```
+
+</details>
 
 ## Performance on Public Test
 

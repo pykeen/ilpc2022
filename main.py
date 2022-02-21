@@ -6,7 +6,7 @@ from pykeen.evaluation import RankBasedEvaluator
 from pykeen.losses import NSSALoss
 from pykeen.models.inductive import InductiveNodePiece, InductiveNodePieceGNN
 from pykeen.trackers import ConsoleResultTracker, WANDBResultTracker
-from pykeen.training import LCWATrainingLoop, SLCWATrainingLoop
+from pykeen.training import SLCWATrainingLoop
 from pykeen.typing import TESTING, TRAINING, VALIDATION
 from pykeen.utils import resolve_device, set_random_seed
 from torch.optim import Adam
@@ -19,6 +19,7 @@ DATA = HERE.joinpath("data")
 # fix the seed for reproducibility
 set_random_seed(42)
 
+
 # for GNN layer reproducibility
 # when running on a GPU, make sure to set up an env variable as advised in the doc:
 # https://pytorch.org/docs/stable/generated/torch.use_deterministic_algorithms.html
@@ -27,32 +28,38 @@ set_random_seed(42)
 
 
 @click.command()
-@click.option("-ds", "--dataset-size", type=click.Choice(["small", "large"]), default="small")
-@click.option("-dim", "--embedding-dim", type=int, default=100)
-@click.option("-tokens", "--tokens-per-node", type=int, default=5)
-@click.option("-lr", "--learning-rate", type=float, default=0.0005)
-@click.option("-m", "--margin", type=float, default=15.0)
-@click.option("-negs", "--num-negatives", type=int, default=4)
-@click.option("-b", "--batch-size", type=int, default=256)
-@click.option("-e", "--num-epochs", type=int, default=100)
-@click.option("-wandb", "--wandb", is_flag=True)
-@click.option("-save", "--save-model", is_flag=True)
-@click.option("-gnn", "--gnn", is_flag=True)  # for the Inductive NodePiece GNN baseline
+@click.option("--dataset", type=click.Choice(["small", "large"]), default="small", show_default=True)
+@click.option(
+    "--embedding-dim", type=int, default=100, show_default=True, help="The dimension of the entity embeddings"
+)
+@click.option("--tokens", type=int, default=5, show_default=True, help="Number of tokens to use in NodePiece")
+@click.option("-lr", "--learning-rate", type=float, default=0.0005, show_default=True)
+@click.option(
+    "-m", "--margin", type=float, default=15.0, show_default=True, help="for the margin loss and SLCWA training"
+)
+@click.option(
+    "--num-negatives", type=int, default=4, show_default=True, help="negative samples per positive in the SLCWA regime"
+)
+@click.option("-b", "--batch-size", type=int, default=256, show_default=True)
+@click.option("-e", "--epochs", type=int, default=100, show_default=True, help="The number of training epochs")
+@click.option("--wandb", is_flag=True, help="Track results with Weights & Biases")
+@click.option("--save", is_flag=True, help=f"Save the model in the {DATA} directory")
+@click.option("--gnn", is_flag=True, help="Use the Inductive NodePiece model with GCN layers")
 def main(
-    dataset_size: str,
+    dataset: str,
     embedding_dim: int,
-    tokens_per_node: int,
+    tokens: int,
     learning_rate: float,
     margin: float,
     num_negatives: int,
     batch_size: int,
-    num_epochs: int,
+    epochs: int,
     wandb: bool,
-    save_model: bool,
+    save: bool,
     gnn: bool,
 ):
     # dataset loading
-    dataset = InductiveLPDataset(size=dataset_size)
+    dataset = InductiveLPDataset(size=dataset)
     loss = NSSALoss(margin=margin)
 
     # we have two baselines: InductiveNodePiece and InductiveNodePieceGNN
@@ -64,12 +71,11 @@ def main(
         embedding_dim=embedding_dim,
         triples_factory=dataset.transductive_training,
         inference_factory=dataset.inductive_inference,
-        num_tokens=tokens_per_node,
+        num_tokens=tokens,
         aggregation="mlp",
         loss=loss,
     ).to(resolve_device())
     optimizer = Adam(params=model.parameters(), lr=learning_rate)
-    model.num_parameter_bytes
     print(f"Number of parameters: {sum(p.numel() for p in model.parameters())}")
     print(f"Space occupied: {model.num_parameter_bytes} bytes")
 
@@ -102,7 +108,7 @@ def main(
     # model training and eval on validation starts here
     training_loop.train(
         triples_factory=dataset.transductive_training,
-        num_epochs=num_epochs,
+        num_epochs=epochs,
         batch_size=batch_size,
         callbacks="evaluation",
         callback_kwargs=dict(
@@ -140,12 +146,12 @@ def main(
     if wandb:
         tracker.log_metrics(
             metrics=result.to_flat_dict(),
-            step=num_epochs + 1,
+            step=epochs + 1,
             prefix="test",
         )
 
     # saving the final model
-    if save_model:
+    if save:
         torch.save(model, DATA.joinpath("model.pth"))
 
 
