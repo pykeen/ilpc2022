@@ -1,4 +1,4 @@
-# KG Course Competition on Inductive Link Prediction
+# KG Inductive Link Prediction Challenge (ILPC) 2022
 
 This inductive link prediction competition accompanies the [KG Course](https://github.com/migalkin/kgcourse2021) and 
 welcomes students' attempts to improve the link prediction performance on two newly constructed datasets.
