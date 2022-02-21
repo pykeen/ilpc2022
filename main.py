@@ -1,15 +1,12 @@
-import torch
 import click
-
-from pykeen.training import SLCWATrainingLoop, LCWATrainingLoop
+import torch
 from pykeen.evaluation import RankBasedEvaluator
 from pykeen.losses import NSSALoss
-from pykeen.stoppers import EarlyStopper
 from pykeen.models.inductive import InductiveNodePiece, InductiveNodePieceGNN
-from pykeen.trackers import WANDBResultTracker, ConsoleResultTracker
-from pykeen.typing import TRAINING, VALIDATION, TESTING
+from pykeen.trackers import ConsoleResultTracker, WANDBResultTracker
+from pykeen.training import LCWATrainingLoop, SLCWATrainingLoop
+from pykeen.typing import TESTING, TRAINING, VALIDATION
 from pykeen.utils import resolve_device, set_random_seed
-
 from torch.optim import Adam
 
 from dataset import InductiveLPDataset
@@ -23,32 +20,32 @@ set_random_seed(42)
 
 # torch.use_deterministic_algorithms(True)
 
-@click.command()
-@click.option('-ds', '--dataset_size', type=str, default="small")  # or large
-@click.option('-dim', '--embedding_dim', type=int, default=100)
-@click.option('-tokens', '--tokens_per_node', type=int, default=5)
-@click.option('-lr', '--learning_rate', type=float, default=0.0005)
-@click.option('-m', '--margin', type=float, default=15.0)
-@click.option('-negs', '--num_negatives', type=int, default=4)
-@click.option('-b', '--batch_size', type=int, default=256)
-@click.option('-e', '--num_epochs', type=int, default=100)
-@click.option('-wandb', '--wandb', type=bool, default=False)
-@click.option('-save', '--save_model', type=bool, default=False)
-@click.option('-gnn', '--gnn', type=bool, default=False)  # for the Inductive NodePiece GNN baseline
-def main(
-        dataset_size: str,
-        embedding_dim: int,
-        tokens_per_node: int,
-        learning_rate: float,
-        margin: float,
-        num_negatives: int,
-        batch_size: int,
-        num_epochs: int,
-        wandb: bool,
-        save_model: bool,
-        gnn: bool,
-):
 
+@click.command()
+@click.option("-ds", "--dataset-size", type=click.Choice(["small", "large"]), default="small")
+@click.option("-dim", "--embedding-dim", type=int, default=100)
+@click.option("-tokens", "--tokens-per-node", type=int, default=5)
+@click.option("-lr", "--learning-rate", type=float, default=0.0005)
+@click.option("-m", "--margin", type=float, default=15.0)
+@click.option("-negs", "--num-negatives", type=int, default=4)
+@click.option("-b", "--batch-size", type=int, default=256)
+@click.option("-e", "--num-epochs", type=int, default=100)
+@click.option("-wandb", "--wandb", is_flag=True)
+@click.option("-save", "--save-model", is_flag=True)
+@click.option("-gnn", "--gnn", is_flag=True)  # for the Inductive NodePiece GNN baseline
+def main(
+    dataset_size: str,
+    embedding_dim: int,
+    tokens_per_node: int,
+    learning_rate: float,
+    margin: float,
+    num_negatives: int,
+    batch_size: int,
+    num_epochs: int,
+    wandb: bool,
+    save_model: bool,
+    gnn: bool,
+):
     # dataset loading
     dataset = InductiveLPDataset(size=dataset_size)
     loss = NSSALoss(margin=margin)
@@ -67,13 +64,15 @@ def main(
         loss=loss,
     ).to(resolve_device())
     optimizer = Adam(params=model.parameters(), lr=learning_rate)
+    model.num_parameter_bytes
     print(f"Number of parameters: {sum(p.numel() for p in model.parameters())}")
+    print(f"Space occupied: {model.num_parameter_bytes} bytes")
 
     if wandb:
         tracker = WANDBResultTracker(
             project="inductive_ilp",  # put here your project and entity
             entity="pykeen",
-            config=click.get_current_context().params
+            config=click.get_current_context().params,
         )
         tracker.start_run()
     else:
@@ -88,7 +87,7 @@ def main(
         optimizer=optimizer,
         result_tracker=tracker,
         negative_sampler_kwargs=dict(num_negs_per_pos=num_negatives),  # affects training speed, the more - the better
-        mode=TRAINING  # must be specified for the inductive setup
+        mode=TRAINING,  # must be specified for the inductive setup
     )
 
     # specifying hits@k values: 1, 3, 5, 10, 100
@@ -98,7 +97,6 @@ def main(
     # model training and eval on validation starts here
     training_loop.train(
         triples_factory=dataset.transductive_training,
-        stopper=None,
         num_epochs=num_epochs,
         batch_size=batch_size,
         callbacks="evaluation",
@@ -118,7 +116,7 @@ def main(
         mapped_triples=dataset.inductive_testing.mapped_triples,
         additional_filter_triples=[
             dataset.inductive_inference.mapped_triples,
-            dataset.inductive_validation.mapped_triples
+            dataset.inductive_validation.mapped_triples,
         ],  # filtering of other positive triples
         batch_size=batch_size,
     )
@@ -129,14 +127,16 @@ def main(
     for k in [100, 10, 5, 3, 1]:
         print(f"Test Hits@{k} {results_dict['hits_at_k']['both']['realistic'][k]:.5f}")
     print(f"Test Arithmetic Mean Rank {results_dict['arithmetic_mean_rank']['both']['realistic']:.5f}")
-    print(f"Test Adjusted Arithmetic Mean Rank {results_dict['adjusted_arithmetic_mean_rank']['both']['realistic']:.5f}")
+    print(
+        f"Test Adjusted Arithmetic Mean Rank {results_dict['adjusted_arithmetic_mean_rank']['both']['realistic']:.5f}"
+    )
 
     # you can also log the final results to wandb if you want
     if wandb:
         tracker.log_metrics(
             metrics=result.to_flat_dict(),
             step=num_epochs + 1,
-            prefix='test',
+            prefix="test",
         )
 
     # saving the final model
