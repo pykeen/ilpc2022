@@ -1,4 +1,6 @@
-# KG Inductive Link Prediction Challenge (ILPC) 2022 [![Zenodo DOI](https://zenodo.org/badge/460713416.svg)](https://zenodo.org/badge/latestdoi/460713416)
+# KG Inductive Link Prediction Challenge (ILPC) 2022
+
+[![Zenodo DOI](https://zenodo.org/badge/460713416.svg)](https://zenodo.org/badge/latestdoi/460713416)
 
 This repository introduces the [GALK78k](data/small) and [GALK200k](data/large)
 datasets for benchmarking inductive link prediction models and outlines the 2022
