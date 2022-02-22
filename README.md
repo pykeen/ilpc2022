@@ -7,7 +7,7 @@ datasets for benchmarking inductive link prediction models and outlines the 2022
 incarnation of the Inductive Link Prediction Challenge (ILPC) to accompany
 the [KG Course](https://github.com/migalkin/kgcourse2021).
 
-## Datasets
+## 🗄️ Datasets
 
 <img alt="A schematic diagram of inductive link prediction"
 src="https://pykeen.readthedocs.io/en/latest/_images/ilp_1.png"
@@ -57,7 +57,7 @@ corresponding to the diagram:
 | Inference test       |   29,246 |      130 (subset) |  10,184 |
 | Hold-out test set    |   29,246 |      130 (subset) |  10,172 |
 
-## Challenge
+## 🏅 Challenge
 
 TODO: explain the challenge philosophy, how to participate, etc.
 
@@ -79,7 +79,7 @@ Making a submission:
 5. Open an issue in **this** repo with the link to your repo, performance
    metrics, and model weights
 
-## Baselines
+## 🎸 Baselines
 
 We provide an example workflow in [`main.py`](main.py) for training and
 evaluating two variants of the [NodePiece](https://arxiv.org/abs/2106.12144)
@@ -183,7 +183,9 @@ variant of the dataset after running the following:
 consumption during training is about 2 GB VRAM on the `small` dataset and about
 3 GB on `large`.  
 
-## ⚖️ License
+## 👋 Attribution
+
+### ⚖️ License
 
 The code in this package is licensed under the MIT License. The datasets in this
 repository are licensed under the Creative Commons Zero license. The trained
