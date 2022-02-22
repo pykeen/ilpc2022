@@ -55,6 +55,17 @@ TODO: explain the challenge
 
 ### Baselines
 
+We provide an example workflow in [`main.py`](main.py) for training and
+evaluating two variants of the [NodePiece](https://arxiv.org/abs/2106.12144)
+model:
+
+* `InductiveNodePiece` - plain tokenizer + tokens MLP encoder to bootstrap node representations. Fast.
+* `InductiveNodePieceGNN` - everything above + an additional 2-layer [CompGCN](https://arxiv.org/abs/1911.03082) message passing encoder. Slower but performs better.
+
+The example can be run with `python main.py` and the options can be listed
+with `python main.py --help`.
+
+<!--
 Training shallow entity embeddings in this setup is useless as trained embeddings cannot be used for inference over unseen entities.
 That's why we need new representation learning mechanisms - in particular, we use [NodePiece](https://arxiv.org/abs/2106.12144) for the baselines.
 
@@ -62,46 +73,11 @@ NodePiece in the inductive mode will use the set of relations seen in the traini
 We can afford tokenizing the nodes in the *inference* graph since the set of relations **is shared** between training and inference graphs 
 (more formally, the set of relations of the inference graph is a subset of training ones).
 
-We offer here 2 baselines:
-* `InductiveNodePiece` - plain tokenizer + tokens MLP encoder to bootstrap node representations. Fast.
-* `InductiveNodePieceGNN` - everything above + an additional 2-layer [CompGCN](https://arxiv.org/abs/1911.03082) message passing encoder. Slower but attains higher performance.
-
 For more information on the models check out the [PyKEEN tutorial](https://pykeen.readthedocs.io/en/latest/tutorial/inductive_lp.html) on inductive link prediction with NodePiece
-
-Both baselines are implemented in the `main.py`.
+-->
 
 <details>
-<summary>
-Run `python main.py --help` to show the available options and their default values:
-</summary>
-
-```shell
-Usage: main.py [OPTIONS]
-
-Options:
-  --dataset [small|large]     [default: small]
-  --embedding-dim INTEGER     The dimension of the entity embeddings
-                              [default: 100]
-  --tokens INTEGER            Number of tokens to use in NodePiece  [default:
-                              5]
-  -lr, --learning-rate FLOAT  [default: 0.0005]
-  -m, --margin FLOAT          for the margin loss and SLCWA training
-                              [default: 15.0]
-  --num-negatives INTEGER     negative samples per positive in the SLCWA
-                              regime  [default: 4]
-  -b, --batch-size INTEGER    [default: 256]
-  -e, --epochs INTEGER        The number of training epochs  [default: 100]
-  --wandb                     Track results with Weights & Biases
-  --save                      Save the model in the
-                              /Users/cthoyt/dev/kgcourse_competition/data
-                              directory
-  --gnn                       Use the Inductive NodePiece model with GCN
-                              layers
-```
-
-</details>
-
-### Installation
+<summary>Installation Instructions</summary>
 
 The code employs the [PyKEEN](https://github.com/pykeen/pykeen) framework for training KG link prediction models.
 
@@ -125,6 +101,8 @@ and [torch-geometric](https://github.com/pyg-team/pytorch_geometric)
 compatible with your python, torch, and CUDA versions.
 
 Running the code on a GPU is strongly recommended.
+
+</details>
 
 ## Performance on Public Test
 
