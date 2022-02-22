@@ -14,7 +14,7 @@ Size = Literal["small", "large"]
 
 
 class InductiveLPDataset(DisjointInductivePathDataset):
-    """An inductive link prediction dataset for the `KG Course Competition <https://github.com/migalkin/kgcourse2021>`_."""
+    """An inductive link prediction dataset for the ILPC 2022 Challenge."""
 
     def __init__(self, size: Size = "small", **kwargs):
         """Initialize the inductive link prediction dataset.

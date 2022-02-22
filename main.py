@@ -183,7 +183,8 @@ def main(
         f"Test Arithmetic Mean Rank {results_dict['arithmetic_mean_rank']['both']['realistic']:.5f}"
     )
     print(
-        f"Test Adjusted Arithmetic Mean Rank {results_dict['adjusted_arithmetic_mean_rank']['both']['realistic']:.5f}"
+        f"Test Adjusted Arithmetic Mean Rank Index"
+        f" {results_dict['adjusted_arithmetic_mean_rank_index']['both']['realistic']:.5f}"
     )
 
     # you can also log the final results to wandb if you want
