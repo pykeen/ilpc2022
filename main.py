@@ -50,7 +50,7 @@ set_random_seed(42)
     show_default=True,
     help="Number of tokens to use in NodePiece",
 )
-@click.option("-lr", "--learning-rate", type=float, default=0.0005, show_default=True)
+@click.option("-lr", "--learning-rate", type=float, default=0.0001, show_default=True)
 @click.option(
     "-m",
     "--margin",
