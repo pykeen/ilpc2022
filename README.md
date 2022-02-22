@@ -1,10 +1,13 @@
-# KG Inductive Link Prediction Challenge (ILPC) 2022
+# KG Inductive Link Prediction Challenge (ILPC) 2022 [![Zenodo DOI](https://zenodo.org/badge/460713416.svg)](https://zenodo.org/badge/latestdoi/460713416)
 
-<p align="center">
-  <a href="https://zenodo.org/badge/latestdoi/460713416">
-    <img src="https://zenodo.org/badge/460713416.svg" alt="DOI">
-  </a>
-</p>
+<img alt="A schematic diagram of inductive link prediction"
+     src="https://pykeen.readthedocs.io/en/latest/_images/ilp_1.png" 
+     height="350"
+/>
+
+Inductive link prediction is different from the standard transductive task in a way that at inference time
+you are given a new, unseen graph with unseen entities (but known relation types).
+
 
 This inductive link prediction competition accompanies the [KG Course](https://github.com/migalkin/kgcourse2021) and 
 welcomes students' attempts to improve the link prediction performance on two newly constructed datasets.
@@ -39,12 +42,6 @@ compatible with your python, torch, and CUDA versions.
 Running the code on a GPU is strongly recommended.
 
 ## Dataset
-
-Inductive link prediction is different from the standard transductive task in a way that at inference time
-you are given a new, unseen graph with unseen entities (but known relation types). 
-Here is the schematic description of the task:
-
-![](https://pykeen.readthedocs.io/en/latest/_images/ilp_1.png)
 
 Here, we provide 2 inductive LP datasets. Each dataset in `./data` consists of 4 splits:
 
