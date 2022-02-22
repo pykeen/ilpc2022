@@ -2,7 +2,7 @@
 
 <img alt="A schematic diagram of inductive link prediction"
      src="https://pykeen.readthedocs.io/en/latest/_images/ilp_1.png" 
-     style="max-height: 230px;"
+     height="230"
 />
 
 Inductive link prediction is different from the standard transductive task in a way that at inference time
