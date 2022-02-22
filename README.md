@@ -2,7 +2,10 @@
 
 This repository introduces the [GALK78k](data/small) and [GALK200k](data/large)
 datasets for benchmarking inductive link prediction models and outlines the 2022
-incarnation of the Inductive Link Prediction Challenge (ILPC).
+incarnation of the Inductive Link Prediction Challenge (ILPC) to accompany
+the [KG Course](https://github.com/migalkin/kgcourse2021).
+
+## Datasets
 
 While in *transductive* link prediction, the training and inference graph
 are the same (and therefore contain the same entities), in *inductive* link
@@ -10,27 +13,21 @@ prediction, there is a disjoint inference graph that potentially contains new,
 unseen entities.
 
 <img alt="A schematic diagram of inductive link prediction"
-     src="https://pykeen.readthedocs.io/en/latest/_images/ilp_1.png" 
+     src="https://pykeen.readthedocs.io/en/latest/_images/ilp_1.png"
      height="200" align="center"
 />
 
-This repository does the following:
-
-1. introduces a large, novel dataset for benchmarking inductive link prediction models
-2. outlines an inductive link prediction competition to accompany the [KG Course](https://github.com/migalkin/kgcourse2021)
-3. provides an example training and evaluation workflow
-
-## Dataset
-
-Here, we provide 2 inductive LP datasets. Each dataset in `./data` consists of 4 splits:
+Both the small and large variants of the datasets can be found in the
+[`data`](data) folder of this repository. Each contains four splits corresponding
+to the diagram:
 
 * `train.txt` - the training graph on which you are supposed to train a model
 * `inference.txt` - the inductive inference graph **disjoint** with the training one - that is, it has a new non-overlapping set of entities, the missing links are sampled from this graph
 * `inductive_validation.txt` - validation set of triples to predict, uses entities from the **inference** graph
 * `inductive_test.txt` - test set of triples to predict, uses entities from the **inference** graph
-* a held-out test set of triples - kept by the organizers for the final ranking 😉 , uses entities from the **inference** graph
+* a hold-out test set of triples - kept by the organizers for the final ranking 😉 , uses entities from the **inference** graph
 
-`small` dataset stats:
+### [GALK78k](data/small)
 
 | Split                | Entities  | Relations   | Triples |
 |----------------------|-----------|-------------|---------|
@@ -38,10 +35,10 @@ Here, we provide 2 inductive LP datasets. Each dataset in `./data` consists of 4
 | Inference            | 6,653     | 96 (subset) | 20,960  |
 | Inference validation | 6,653     | 96 (subset) | 2,908   |
 | Inference test       | 6,653     | 96 (subset) | 2,902   |
-| Held-out test set    | 6,653     | 96 (subset) | 2,894   |
+| Hold-out test set    | 6,653     | 96 (subset) | 2,894   |
 
 
-`large` dataset stats:
+### [GALK200k](data/large)
 
 | Split                | Entities | Relations         | Triples |
 |----------------------|----------|-------------------|---------|
@@ -49,34 +46,13 @@ Here, we provide 2 inductive LP datasets. Each dataset in `./data` consists of 4
 | Inference            | 29,246   | 130 (subset)      | 77,044  |
 | Inference validation | 29,246   | 130 (subset)      | 10,179  |
 | Inference test       | 29,246   | 130 (subset)      | 10,184  |
-| Held-out test set    | 29,246   | 130 (subset)      | 10,172  |
+| Hold-out test set    | 29,246   | 130 (subset)      | 10,172  |
 
-## Installation
+## Challenge
 
-The code employs the [PyKEEN](https://github.com/pykeen/pykeen) framework for training KG link prediction models.
+TODO: explain the challenge
 
-Main requirements:
-* python >= 3.9
-* torch >= 1.10
-
-You will need PyKEEN 1.8.0 or newer.
-```shell
-$ pip install pykeen
-```
-
-By the time of creation of this repo 1.8.0 is not yet there, but the latest version from sources contains
-everything we need
-```shell
-$ pip install git+https://github.com/pykeen/pykeen.git
-```
-
-If you plan to use GNNs (including the `InductiveNodePieceGNN` baseline) make sure you install [torch-scatter](https://github.com/rusty1s/pytorch_scatter)
-and [torch-geometric](https://github.com/pyg-team/pytorch_geometric)
-compatible with your python, torch, and CUDA versions.
-
-Running the code on a GPU is strongly recommended.
-
-## Baselines
+### Baselines
 
 Training shallow entity embeddings in this setup is useless as trained embeddings cannot be used for inference over unseen entities.
 That's why we need new representation learning mechanisms - in particular, we use [NodePiece](https://arxiv.org/abs/2106.12144) for the baselines.
@@ -123,6 +99,31 @@ Options:
 ```
 
 </details>
+
+### Installation
+
+The code employs the [PyKEEN](https://github.com/pykeen/pykeen) framework for training KG link prediction models.
+
+Main requirements:
+* python >= 3.9
+* torch >= 1.10
+
+You will need PyKEEN 1.8.0 or newer.
+```shell
+$ pip install pykeen
+```
+
+By the time of creation of this repo 1.8.0 is not yet there, but the latest version from sources contains
+everything we need
+```shell
+$ pip install git+https://github.com/pykeen/pykeen.git
+```
+
+If you plan to use GNNs (including the `InductiveNodePieceGNN` baseline) make sure you install [torch-scatter](https://github.com/rusty1s/pytorch_scatter)
+and [torch-geometric](https://github.com/pyg-team/pytorch_geometric)
+compatible with your python, torch, and CUDA versions.
+
+Running the code on a GPU is strongly recommended.
 
 ## Performance on Public Test
 
