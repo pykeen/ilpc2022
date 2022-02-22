@@ -10,37 +10,11 @@ unseen entities.
      height="200" align="center"
 />
 
-This inductive link prediction competition accompanies the [KG Course](https://github.com/migalkin/kgcourse2021) and 
-welcomes students' attempts to improve the link prediction performance on two newly constructed datasets.
+This repository does the following:
 
-This repo contains:
-* The datasets in the `./data` folder
-* A boilerplate code with 2 baselines that you can base your implementations on
-
-## Installation
-
-The code employs the [PyKEEN](https://github.com/pykeen/pykeen) framework for training KG link prediction models.
-
-Main requirements:
-* python >= 3.9
-* torch >= 1.10
-
-You will need PyKEEN 1.8.0 or newer.
-```shell
-$ pip install pykeen
-```
-
-By the time of creation of this repo 1.8.0 is not yet there, but the latest version from sources contains
-everything we need
-```shell
-$ pip install git+https://github.com/pykeen/pykeen.git
-```
-
-If you plan to use GNNs (including the `InductiveNodePieceGNN` baseline) make sure you install [torch-scatter](https://github.com/rusty1s/pytorch_scatter)
-and [torch-geometric](https://github.com/pyg-team/pytorch_geometric) 
-compatible with your python, torch, and CUDA versions.
-
-Running the code on a GPU is strongly recommended.
+1. introduces a large, novel dataset for benchmarking inductive link prediction models
+2. outlines an inductive link prediction competition to accompany the [KG Course](https://github.com/migalkin/kgcourse2021)
+3. provides an example training and evaluation workflow
 
 ## Dataset
 
@@ -73,6 +47,30 @@ Here, we provide 2 inductive LP datasets. Each dataset in `./data` consists of 4
 | Inference test       | 29,246   | 130 (subset)      | 10,184  |
 | Held-out test set    | 29,246   | 130 (subset)      | 10,172  |
 
+## Installation
+
+The code employs the [PyKEEN](https://github.com/pykeen/pykeen) framework for training KG link prediction models.
+
+Main requirements:
+* python >= 3.9
+* torch >= 1.10
+
+You will need PyKEEN 1.8.0 or newer.
+```shell
+$ pip install pykeen
+```
+
+By the time of creation of this repo 1.8.0 is not yet there, but the latest version from sources contains
+everything we need
+```shell
+$ pip install git+https://github.com/pykeen/pykeen.git
+```
+
+If you plan to use GNNs (including the `InductiveNodePieceGNN` baseline) make sure you install [torch-scatter](https://github.com/rusty1s/pytorch_scatter)
+and [torch-geometric](https://github.com/pyg-team/pytorch_geometric)
+compatible with your python, torch, and CUDA versions.
+
+Running the code on a GPU is strongly recommended.
 
 ## Baselines
 
