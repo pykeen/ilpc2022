@@ -19,6 +19,9 @@ unseen entities.
      height="200" align="center"
 />
 
+TODO: give background on the dataset - where does it come from and how was it
+constructed
+
 Both the small and large variants of the dataset can be found in the
 [`data`](data) folder of this repository. Each contains four splits corresponding
 to the diagram:
