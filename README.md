@@ -16,7 +16,7 @@ unseen entities.
 
 <img alt="A schematic diagram of inductive link prediction"
      src="https://pykeen.readthedocs.io/en/latest/_images/ilp_1.png"
-     height="200" align="center"
+     height="200" align="right"
 />
 
 TODO: give background on the dataset - where does it come from and how was it
