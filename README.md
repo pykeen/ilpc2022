@@ -19,7 +19,7 @@ unseen entities.
      height="200" align="center"
 />
 
-Both the small and large variants of the datasets can be found in the
+Both the small and large variants of the dataset can be found in the
 [`data`](data) folder of this repository. Each contains four splits corresponding
 to the diagram:
 
@@ -31,24 +31,23 @@ to the diagram:
 
 ### [GALK78k](data/small)
 
-| Split                | Entities  | Relations   | Triples |
-|----------------------|-----------|-------------|---------|
-| Train                | 10,230    | 96          | 78,616  |
-| Inference            | 6,653     | 96 (subset) | 20,960  |
-| Inference validation | 6,653     | 96 (subset) | 2,908   |
-| Inference test       | 6,653     | 96 (subset) | 2,902   |
-| Hold-out test set    | 6,653     | 96 (subset) | 2,894   |
-
+| Split                |  Entities |   Relations | Triples |
+|----------------------|----------:|------------:|--------:|
+| Train                |    10,230 |          96 |  78,616 |
+| Inference            |     6,653 | 96 (subset) |  20,960 |
+| Inference validation |     6,653 | 96 (subset) |   2,908 |
+| Inference test       |     6,653 | 96 (subset) |   2,902 |
+| Hold-out test set    |     6,653 | 96 (subset) |   2,894 |
 
 ### [GALK200k](data/large)
 
-| Split                | Entities | Relations         | Triples |
-|----------------------|----------|-------------------|---------|
-| Train                | 46,626   | 130               | 202,446 |
-| Inference            | 29,246   | 130 (subset)      | 77,044  |
-| Inference validation | 29,246   | 130 (subset)      | 10,179  |
-| Inference test       | 29,246   | 130 (subset)      | 10,184  |
-| Hold-out test set    | 29,246   | 130 (subset)      | 10,172  |
+| Split                | Entities |         Relations | Triples |
+|----------------------|---------:|------------------:|--------:|
+| Train                |   46,626 |               130 | 202,446 |
+| Inference            |   29,246 |      130 (subset) |  77,044 |
+| Inference validation |   29,246 |      130 (subset) |  10,179 |
+| Inference test       |   29,246 |      130 (subset) |  10,184 |
+| Hold-out test set    |   29,246 |      130 (subset) |  10,172 |
 
 ## Challenge
 
