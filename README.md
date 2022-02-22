@@ -77,10 +77,11 @@ We invite submissions proposing new inductive models as well as extending baseli
 We use the
 following [rank-based evaluation metrics](https://pykeen.readthedocs.io/en/stable/tutorial/understanding_evaluation.html):
 
-* MRR (Inverse Harmonic Mean Rank) - higher is better
-* Hits @ K (H@K; with K as one of `{1, 3, 5, 10, 100}`) - higher is better
-* MR (Mean Rank) - lower is better
-* AMR (Adjusted Mean Rank) - lower is better
+* MRR (Inverse Harmonic Mean Rank) - higher is better, range `[0, 1]`
+* Hits @ K (H@K; with K as one of `{1, 3, 5, 10, 100}`) - higher is better, range `[0, 1]`
+* MR (Mean Rank) - lower is better, range `[1, num_entities]`
+* AMRI (Adjusted Arithmetic Mean Rank Index) - higher is better, compares model scoring 
+against random scoring, range `[-1, 1]`. AMRI=0 means the model is not better than random scoring.
 
 Making a submission:
 
@@ -165,10 +166,10 @@ variant of the dataset after running the following:
   $ python main.py --dataset small -d 32 -e 50 -n 16 -m 5.0 -lr 0.0001
   ```
 
-| **Model**             |        MRR |      H@100 |       H@10 |        H@5 |        H@3 |        H@1 |      MR |       AMR |
+| **Model**             |        MRR |      H@100 |       H@10 |        H@5 |        H@3 |        H@1 |      MR |      AMRI |
 |-----------------------|-----------:|-----------:|-----------:|-----------:|-----------:|-----------:|--------:|----------:|
-| InductiveNodePieceGNN | **0.1326** | **0.4705** | **0.2509** | **0.1899** | **0.1396** | **0.0763** | **881** | **0.270** |
-| InductiveNodePiece    |     0.0381 |     0.4678 |     0.0917 |     0.0500 |     0.0219 |      0.007 |    1088 |     0.334 |
+| InductiveNodePieceGNN | **0.1326** | **0.4705** | **0.2509** | **0.1899** | **0.1396** | **0.0763** | **881** | **0.730** |
+| InductiveNodePiece    |     0.0381 |     0.4678 |     0.0917 |     0.0500 |     0.0219 |      0.007 |    1088 |     0.666 |
 
 ### Baseline Performance on Large Dataset
 
@@ -187,10 +188,10 @@ variant of the dataset after running the following:
   $ python main.py --dataset large -d 32 -e 17 -n 16 -m 15.0 -lr 0.0001
   ```
 
-| **Model**             |    MRR |     H@100 |       H@10 |        H@5 |        H@3 |    H@1 |       MR |       AMR |
+| **Model**             |    MRR |     H@100 |       H@10 |        H@5 |        H@3 |    H@1 |       MR |      AMRI |
 |-----------------------|-------:|----------:|-----------:|-----------:|-----------:|-------:|---------:|----------:|
-| InductiveNodePieceGNN | 0.0705 | **0.374** | **0.1458** | **0.0990** | **0.0730** | 0.0319 | **4566** | **0.318** |
-| InductiveNodePiece    | 0.0651 |     0.287 |     0.1246 |     0.0809 |     0.0542 | 0.0373 |     5078 |     0.354 |
+| InductiveNodePieceGNN | 0.0705 | **0.374** | **0.1458** | **0.0990** | **0.0730** | 0.0319 | **4566** | **0.682** |
+| InductiveNodePiece    | 0.0651 |     0.287 |     0.1246 |     0.0809 |     0.0542 | 0.0373 |     5078 |     0.646 |
 
 \* Note: All models were trained on a single RTX 8000. Average memory
 consumption during training is about 2 GB VRAM on the `small` dataset and about
