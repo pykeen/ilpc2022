@@ -1,5 +1,9 @@
 # KG Inductive Link Prediction Challenge (ILPC) 2022 [![Zenodo DOI](https://zenodo.org/badge/460713416.svg)](https://zenodo.org/badge/latestdoi/460713416)
 
+This repository introduces the GALK78k and GALK200k datasets for benchmarking
+inductive link prediction models and outlines the 2022 incarnation of the 
+Inductive Link Prediction Challenge (ILPC).
+
 While in *transductive* link prediction, the training and inference graph
 are the same (and therefore contain the same entities), in *inductive* link
 prediction, there is a disjoint inference graph that potentially contains new,
