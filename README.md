@@ -119,12 +119,8 @@ Running the code on a GPU is strongly recommended.
 
 ### Baseline Performance on Small Dataset
 
-| **Model**             |        MRR |      H@100 |       H@10 |        H@5 |        H@3 |        H@1 |      MR |       AMR |
-|-----------------------|-----------:|-----------:|-----------:|-----------:|-----------:|-----------:|--------:|----------:|
-| InductiveNodePieceGNN | **0.1326** | **0.4705** | **0.2509** | **0.1899** | **0.1396** | **0.0763** | **881** | **0.270** |
-| InductiveNodePiece    |     0.0381 |     0.4678 |     0.0917 |     0.0500 |     0.0219 |      0.007 |    1088 |     0.334 |
-
-Configurations:
+We report the performance of both variants of the NodePiece model on the small
+variant of the dataset after running the following:
 
 * InductiveNodePieceGNN (32d, 50 epochs, 24K params) - NodePiece (5 tokens per node, MLP aggregator) + 2-layer CompGCN with DistMult composition function + DistMult decoder. Training time: **77 min***
   ```shell
@@ -135,14 +131,15 @@ Configurations:
   python main.py -dim 32 -e 50 -negs 16 -m 5.0 -lr 0.0001
   ```
 
+| **Model**             |        MRR |      H@100 |       H@10 |        H@5 |        H@3 |        H@1 |      MR |       AMR |
+|-----------------------|-----------:|-----------:|-----------:|-----------:|-----------:|-----------:|--------:|----------:|
+| InductiveNodePieceGNN | **0.1326** | **0.4705** | **0.2509** | **0.1899** | **0.1396** | **0.0763** | **881** | **0.270** |
+| InductiveNodePiece    |     0.0381 |     0.4678 |     0.0917 |     0.0500 |     0.0219 |      0.007 |    1088 |     0.334 |
+
 ### Baseline Performance on Large Dataset
 
-| **Model**             |    MRR |     H@100 |       H@10 |        H@5 |        H@3 |    H@1 |       MR |       AMR |
-|-----------------------|-------:|----------:|-----------:|-----------:|-----------:|-------:|---------:|----------:|
-| InductiveNodePieceGNN | 0.0705 | **0.374** | **0.1458** | **0.0990** | **0.0730** | 0.0319 | **4566** | **0.318** |
-| InductiveNodePiece    | 0.0651 |     0.287 |     0.1246 |     0.0809 |     0.0542 | 0.0373 |     5078 |     0.354 |
-
-Configurations:
+We report the performance of both variants of the NodePiece model on the large
+variant of the dataset after running the following:
 
 * InductiveNodePieceGNN (32d, 53 epochs, 24K params) - NodePiece (5 tokens per node, MLP aggregator) + 2-layer CompGCN with DistMult composition function + DistMult decoder. Training time: **8 hours***
   ```shell
@@ -152,5 +149,10 @@ Configurations:
   ```shell
   python main.py -dim 32 -e 17 -negs 16 -m 15.0 -lr 0.0001 -ds large
   ```
+
+| **Model**             |    MRR |     H@100 |       H@10 |        H@5 |        H@3 |    H@1 |       MR |       AMR |
+|-----------------------|-------:|----------:|-----------:|-----------:|-----------:|-------:|---------:|----------:|
+| InductiveNodePieceGNN | 0.0705 | **0.374** | **0.1458** | **0.0990** | **0.0730** | 0.0319 | **4566** | **0.318** |
+| InductiveNodePiece    | 0.0651 |     0.287 |     0.1246 |     0.0809 |     0.0542 | 0.0373 |     5078 |     0.354 |
 
 \* Note: All models were trained on a single RTX 8000. Average memory consumption during training is about 2 GB VRAM on the `small` dataset and about 3 GB on `large`.  
