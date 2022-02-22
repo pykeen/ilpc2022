@@ -124,11 +124,11 @@ variant of the dataset after running the following:
 
 * InductiveNodePieceGNN (32d, 50 epochs, 24K params) - NodePiece (5 tokens per node, MLP aggregator) + 2-layer CompGCN with DistMult composition function + DistMult decoder. Training time: **77 min***
   ```shell
-  python main.py -dim 32 -e 50 -negs 16 -m 2.0 -lr 0.0001 --gnn
+  $ python main.py -dim 32 -e 50 -negs 16 -m 2.0 -lr 0.0001 --gnn
   ```
 * InductiveNodePiece (32d, 50 epochs, 15.5K params) - NodePiece (5 tokens per node, MLP aggregator) + DistMult decoder. Training time: **6 min***
   ```shell
-  python main.py -dim 32 -e 50 -negs 16 -m 5.0 -lr 0.0001
+  $ python main.py -dim 32 -e 50 -negs 16 -m 5.0 -lr 0.0001
   ```
 
 | **Model**             |        MRR |      H@100 |       H@10 |        H@5 |        H@3 |        H@1 |      MR |       AMR |
@@ -143,11 +143,11 @@ variant of the dataset after running the following:
 
 * InductiveNodePieceGNN (32d, 53 epochs, 24K params) - NodePiece (5 tokens per node, MLP aggregator) + 2-layer CompGCN with DistMult composition function + DistMult decoder. Training time: **8 hours***
   ```shell
-  python main.py -dim 32 -e 53 -negs 16 -m 20.0 -lr 0.0001 -ds large --gnn
+  $ python main.py -dim 32 -e 53 -negs 16 -m 20.0 -lr 0.0001 -ds large --gnn
   ```
 * InductiveNodePiece (32d, 17 epochs, 15.5K params) - NodePiece (5 tokens per node, MLP aggregator) + DistMult decoder. Training time: **5 min***
   ```shell
-  python main.py -dim 32 -e 17 -negs 16 -m 15.0 -lr 0.0001 -ds large
+  $ python main.py -dim 32 -e 17 -negs 16 -m 15.0 -lr 0.0001 -ds large
   ```
 
 | **Model**             |    MRR |     H@100 |       H@10 |        H@5 |        H@3 |    H@1 |       MR |       AMR |
