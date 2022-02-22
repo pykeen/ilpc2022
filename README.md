@@ -1,13 +1,13 @@
 # KG Inductive Link Prediction Challenge (ILPC) 2022 [![Zenodo DOI](https://zenodo.org/badge/460713416.svg)](https://zenodo.org/badge/latestdoi/460713416)
 
+While in *transductive* link prediction, the entities are the same in both the
+training and inference graph, in *inductive* link prediction, the inference graph
+contains new entities.
+
 <img alt="A schematic diagram of inductive link prediction"
      src="https://pykeen.readthedocs.io/en/latest/_images/ilp_1.png" 
      height="200" align="center"
 />
-
-Inductive link prediction is different from the standard transductive task in a way that at inference time
-you are given a new, unseen graph with unseen entities (but known relation types).
-
 
 This inductive link prediction competition accompanies the [KG Course](https://github.com/migalkin/kgcourse2021) and 
 welcomes students' attempts to improve the link prediction performance on two newly constructed datasets.
