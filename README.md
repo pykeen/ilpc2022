@@ -182,3 +182,9 @@ variant of the dataset after running the following:
 \* Note: All models were trained on a single RTX 8000. Average memory
 consumption during training is about 2 GB VRAM on the `small` dataset and about
 3 GB on `large`.  
+
+## ⚖️ License
+
+The code in this package is licensed under the MIT License. The datasets in this
+repository are licensed under the Creative Commons Zero license. The trained
+models and their weights are licensed under the Creative Commons Zero license.
