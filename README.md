@@ -9,15 +9,15 @@ the [KG Course](https://github.com/migalkin/kgcourse2021).
 
 ## Datasets
 
-While in *transductive* link prediction, the training and inference graph
-are the same (and therefore contain the same entities), in *inductive* link
-prediction, there is a disjoint inference graph that potentially contains new,
-unseen entities.
-
 <img alt="A schematic diagram of inductive link prediction"
      src="https://pykeen.readthedocs.io/en/latest/_images/ilp_1.png"
      height="200" align="right"
 />
+
+While in *transductive* link prediction, the training and inference graph
+are the same (and therefore contain the same entities), in *inductive* link
+prediction, there is a disjoint inference graph that potentially contains new,
+unseen entities.
 
 TODO: give background on the dataset - where does it come from and how was it
 constructed
