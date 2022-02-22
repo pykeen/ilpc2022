@@ -1,8 +1,9 @@
 # KG Inductive Link Prediction Challenge (ILPC) 2022 [![Zenodo DOI](https://zenodo.org/badge/460713416.svg)](https://zenodo.org/badge/latestdoi/460713416)
 
-While in *transductive* link prediction, the entities are the same in both the
-training and inference graph, in *inductive* link prediction, the inference graph
-contains new entities.
+While in *transductive* link prediction, the training and inference graph
+are the same (and therefore contain the same entities), in *inductive* link
+prediction, there is a disjoint inference graph that potentially contains new,
+unseen entities.
 
 <img alt="A schematic diagram of inductive link prediction"
      src="https://pykeen.readthedocs.io/en/latest/_images/ilp_1.png" 
