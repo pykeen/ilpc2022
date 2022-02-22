@@ -1,5 +1,11 @@
 # KG Inductive Link Prediction Challenge (ILPC) 2022
 
+<p align="center">
+  <a href="https://zenodo.org/badge/latestdoi/460713416">
+    <img src="https://zenodo.org/badge/460713416.svg" alt="DOI">
+  </a>
+</p>
+
 This inductive link prediction competition accompanies the [KG Course](https://github.com/migalkin/kgcourse2021) and 
 welcomes students' attempts to improve the link prediction performance on two newly constructed datasets.
 
