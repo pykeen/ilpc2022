@@ -28,23 +28,59 @@ set_random_seed(42)
 
 
 @click.command()
-@click.option("--dataset", type=click.Choice(["small", "large"]), default="small", show_default=True)
 @click.option(
-    "--embedding-dim", type=int, default=100, show_default=True, help="The dimension of the entity embeddings"
+    "--dataset",
+    type=click.Choice(["small", "large"]),
+    default="small",
+    show_default=True,
 )
-@click.option("--tokens", type=int, default=5, show_default=True, help="Number of tokens to use in NodePiece")
+@click.option(
+    "-d",
+    "--embedding-dim",
+    type=int,
+    default=100,
+    show_default=True,
+    help="The dimension of the entity embeddings",
+)
+@click.option(
+    "-t",
+    "--tokens",
+    type=int,
+    default=5,
+    show_default=True,
+    help="Number of tokens to use in NodePiece",
+)
 @click.option("-lr", "--learning-rate", type=float, default=0.0005, show_default=True)
 @click.option(
-    "-m", "--margin", type=float, default=15.0, show_default=True, help="for the margin loss and SLCWA training"
+    "-m",
+    "--margin",
+    type=float,
+    default=15.0,
+    show_default=True,
+    help="for the margin loss and SLCWA training",
 )
 @click.option(
-    "--num-negatives", type=int, default=4, show_default=True, help="negative samples per positive in the SLCWA regime"
+    "-n",
+    "--num-negatives",
+    type=int,
+    default=4,
+    show_default=True,
+    help="negative samples per positive in the SLCWA regime",
 )
 @click.option("-b", "--batch-size", type=int, default=256, show_default=True)
-@click.option("-e", "--epochs", type=int, default=100, show_default=True, help="The number of training epochs")
+@click.option(
+    "-e",
+    "--epochs",
+    type=int,
+    default=100,
+    show_default=True,
+    help="The number of training epochs",
+)
 @click.option("--wandb", is_flag=True, help="Track results with Weights & Biases")
 @click.option("--save", is_flag=True, help=f"Save the model in the {DATA} directory")
-@click.option("--gnn", is_flag=True, help="Use the Inductive NodePiece model with GCN layers")
+@click.option(
+    "--gnn", is_flag=True, help="Use the Inductive NodePiece model with GCN layers"
+)
 def main(
     dataset: str,
     embedding_dim: int,
@@ -97,7 +133,10 @@ def main(
         model=model,
         optimizer=optimizer,
         result_tracker=tracker,
-        negative_sampler_kwargs=dict(num_negs_per_pos=num_negatives),  # affects training speed, the more - the better
+        negative_sampler_kwargs=dict(
+            # affects training speed, the more - the better
+            num_negs_per_pos=num_negatives
+        ),
         mode=TRAINING,  # must be specified for the inductive setup
     )
 
@@ -126,18 +165,23 @@ def main(
         model=model,
         mapped_triples=dataset.inductive_testing.mapped_triples,
         additional_filter_triples=[
+            # filtering of other positive triples
             dataset.inductive_inference.mapped_triples,
             dataset.inductive_validation.mapped_triples,
-        ],  # filtering of other positive triples
+        ],
         batch_size=batch_size,
     )
 
     # extracting final metrics
     results_dict = result.to_dict()
-    print(f"Test MRR {results_dict['inverse_harmonic_mean_rank']['both']['realistic']:.5f}")
+    print(
+        f"Test MRR {results_dict['inverse_harmonic_mean_rank']['both']['realistic']:.5f}"
+    )
     for k in [100, 10, 5, 3, 1]:
         print(f"Test Hits@{k} {results_dict['hits_at_k']['both']['realistic'][k]:.5f}")
-    print(f"Test Arithmetic Mean Rank {results_dict['arithmetic_mean_rank']['both']['realistic']:.5f}")
+    print(
+        f"Test Arithmetic Mean Rank {results_dict['arithmetic_mean_rank']['both']['realistic']:.5f}"
+    )
     print(
         f"Test Adjusted Arithmetic Mean Rank {results_dict['adjusted_arithmetic_mean_rank']['both']['realistic']:.5f}"
     )
