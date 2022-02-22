@@ -51,7 +51,7 @@ to the diagram:
 
 ## Challenge
 
-TODO: explain the challenge
+TODO: explain the challenge philosophy, how to participate, etc.
 
 We use the following [rank-based evaluation metrics](https://pykeen.readthedocs.io/en/stable/tutorial/understanding_evaluation.html):
 
