@@ -2,7 +2,7 @@
 
 [![Zenodo DOI](https://zenodo.org/badge/460713416.svg)](https://zenodo.org/badge/latestdoi/460713416)
 
-This repository introduces the [GALK78k](data/small) and [GALK200k](data/large)
+[This repository](https://github.com/migalkin/ilpc2022) introduces the [ILPC'22 Small](data/small) and [ILPC'22 Large](data/large)
 datasets for benchmarking inductive link prediction models and outlines the 2022
 incarnation of the Inductive Link Prediction Challenge (ILPC) to accompany
 the [KG Course](https://github.com/migalkin/kgcourse2021).
@@ -19,8 +19,20 @@ the same (and therefore contain the same entities), in *inductive* link
 prediction, there is a disjoint inference graph that potentially contains new,
 unseen entities.
 
-TODO: give background on the dataset - where does it come from and how was it
-constructed
+For this challenge, we sampled two datasets from [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page), 
+the largest publicly available and open KG. Inductive link prediction implies
+training a model on one graph (denoted as `training`) and performing inference, 
+eg, validation and test, over a new graph (denoted as `inference`). 
+
+Dataset creation principles:
+* Represents a real-world KG used in many NLP and ML tasks (Wikidata)
+* Larger than [existing benchmarks](https://github.com/pykeen/pykeen/blob/master/src/pykeen/datasets/inductive/ilp_teru.py)
+* Allows for fast iteration and hypothesis testing - we sampled two datasets, small and large, that vary in sizes of training and
+inference graphs. 
+* The ratio of training / inference graph sizes is challenging for modern GNNs.
+* Training graph is a connected component
+* Inference graph is a connected component
+
 
 Both the small and large variants of the dataset can be found in the
 [`data`](data) folder of this repository. Each contains four splits
@@ -37,7 +49,7 @@ corresponding to the diagram:
 * a hold-out test set of triples - kept by the organizers for the final ranking
   😉 , uses entities from the **inference** graph
 
-### [GALK78k](data/small)
+### [ILPC'22 Small](data/small)
 
 | Split                |  Entities |   Relations | Triples |
 |----------------------|----------:|------------:|--------:|
@@ -47,7 +59,7 @@ corresponding to the diagram:
 | Inference test       |     6,653 | 96 (subset) |   2,902 |
 | Hold-out test set    |     6,653 | 96 (subset) |   2,894 |
 
-### [GALK200k](data/large)
+### [ILPC'22 Large](data/large)
 
 | Split                | Entities |         Relations | Triples |
 |----------------------|---------:|------------------:|--------:|
@@ -59,7 +71,8 @@ corresponding to the diagram:
 
 ## 🏅 Challenge
 
-TODO: explain the challenge philosophy, how to participate, etc.
+The Challenge aims to streamline community efforts in the emerging area of representation learning techniques beyond shallow entity embeddings.
+We invite submissions proposing new inductive models as well as extending baseline models to achieve higher performance.
 
 We use the
 following [rank-based evaluation metrics](https://pykeen.readthedocs.io/en/stable/tutorial/understanding_evaluation.html):
