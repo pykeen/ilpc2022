@@ -1,3 +1,4 @@
+"""The challenge's datasets."""
 from pathlib import Path
 
 from pykeen.datasets.inductive.base import DisjointInductivePathDataset
@@ -5,6 +6,7 @@ from typing_extensions import Literal
 
 __all__ = [
     "InductiveLPDataset",
+    "Size",
 ]
 
 HERE = Path(__file__).parent.resolve()
@@ -20,7 +22,7 @@ class InductiveLPDataset(DisjointInductivePathDataset):
         """Initialize the inductive link prediction dataset.
 
         :param size: "small" or "large"
-        :param kwargs: keyword arguments to forward to the base dataset class
+        :param kwargs: keyword arguments to forward to the base dataset class, cf. DisjointInductivePathDataset
         """
         super().__init__(
             transductive_training_path=DATA.joinpath(size, "train.txt"),

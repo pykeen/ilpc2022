@@ -3,6 +3,7 @@ import logging
 from pathlib import Path
 
 import click
+import more_click
 import torch
 from pykeen.evaluation import RankBasedEvaluator
 from pykeen.losses import NSSALoss
@@ -13,7 +14,7 @@ from pykeen.typing import TESTING, TRAINING, VALIDATION
 from pykeen.utils import resolve_device, set_random_seed
 from torch.optim import Adam
 
-from dataset import InductiveLPDataset
+from dataset import InductiveLPDataset, Size
 
 HERE = Path(__file__).parent.resolve()
 DATA = HERE.joinpath("data")
@@ -31,10 +32,12 @@ set_random_seed(42)
 
 @click.command()
 @click.option(
+    "-ds",
     "--dataset",
     type=click.Choice(["small", "large"]),
     default="small",
     show_default=True,
+    help="The dataset to use",
 )
 @click.option(
     "-d",
@@ -52,14 +55,21 @@ set_random_seed(42)
     show_default=True,
     help="Number of tokens to use in NodePiece",
 )
-@click.option("-lr", "--learning-rate", type=float, default=0.0001, show_default=True)
+@click.option(
+    "-lr",
+    "--learning-rate",
+    type=float,
+    default=0.0001,
+    show_default=True,
+    help="The learning rate of the optimizer",
+)
 @click.option(
     "-m",
     "--margin",
     type=float,
     default=15.0,
     show_default=True,
-    help="for the margin loss and SLCWA training",
+    help="The margin value to use for the negative sampling self-adversarial loss.",
 )
 @click.option(
     "-n",
@@ -67,9 +77,16 @@ set_random_seed(42)
     type=int,
     default=4,
     show_default=True,
-    help="negative samples per positive in the SLCWA regime",
+    help="The number of negative samples per positive.",
 )
-@click.option("-b", "--batch-size", type=int, default=256, show_default=True)
+@click.option(
+    "-b",
+    "--batch-size",
+    type=int,
+    default=256,
+    show_default=True,
+    help="The batch size to use during training",
+)
 @click.option(
     "-e",
     "--epochs",
@@ -78,13 +95,18 @@ set_random_seed(42)
     show_default=True,
     help="The number of training epochs",
 )
-@click.option("--wandb", is_flag=True, help="Track results with Weights & Biases")
+@click.option(
+    "--wandb",
+    is_flag=True,
+    help="Track results with Weights & Biases (requires `wandb` to be installed).",
+)
 @click.option("--save", is_flag=True, help=f"Save the model in the {DATA} directory")
 @click.option(
     "--gnn", is_flag=True, help="Use the Inductive NodePiece model with GCN layers"
 )
+@more_click.log_level_option()
 def main(
-    dataset: str,
+    dataset: Size,
     embedding_dim: int,
     tokens: int,
     learning_rate: float,
@@ -95,7 +117,12 @@ def main(
     wandb: bool,
     save: bool,
     gnn: bool,
+    log_level: str,
 ):
+    """Train an inductive model with NodePiece representations and an optional GNN encoder."""
+    # set appropriate log-level
+    logging.basicConfig(level=log_level)
+
     # dataset loading
     dataset = InductiveLPDataset(size=dataset)
     loss = NSSALoss(margin=margin)
@@ -114,8 +141,8 @@ def main(
         loss=loss,
     ).to(resolve_device())
     optimizer = Adam(params=model.parameters(), lr=learning_rate)
-    print(f"Number of parameters: {sum(p.numel() for p in model.parameters())}")
-    print(f"Space occupied: {model.num_parameter_bytes} bytes")
+    logging.info(f"Number of parameters: {sum(p.numel() for p in model.parameters())}")
+    logging.info(f"Space occupied: {model.num_parameter_bytes} bytes")
 
     if wandb:
         tracker = WANDBResultTracker(
