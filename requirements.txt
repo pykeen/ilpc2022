@@ -1,4 +1,6 @@
 torch >= 1.10
 pykeen >= 1.8.0
 tqdm
-wandb
+wandb  # TODO: make this optional?
+click
+more_click
