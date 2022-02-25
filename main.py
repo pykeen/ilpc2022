@@ -1,3 +1,5 @@
+"""Example workflow."""
+import logging
 from pathlib import Path
 
 import click
@@ -173,19 +175,12 @@ def main(
     )
 
     # extracting final metrics
-    results_dict = result.to_dict()
-    print(
-        f"Test MRR {results_dict['inverse_harmonic_mean_rank']['both']['realistic']:.5f}"
-    )
-    for k in [100, 10, 5, 3, 1]:
-        print(f"Test Hits@{k} {results_dict['hits_at_k']['both']['realistic'][k]:.5f}")
-    print(
-        f"Test Arithmetic Mean Rank {results_dict['arithmetic_mean_rank']['both']['realistic']:.5f}"
-    )
-    print(
-        f"Test Adjusted Arithmetic Mean Rank Index"
-        f" {results_dict['adjusted_arithmetic_mean_rank_index']['both']['realistic']:.5f}"
-    )
+    for metric, metric_label in [
+        ("inverse_harmonic_mean_rank", "MRR"),
+        *((f"hits_at_{k}", f"Hits@{k}") for k in (100, 10, 5, 3, 1)),
+        ("adjusted_arithmetic_mean_rank_index", "AMRI"),
+    ]:
+        logging.info(f"Test {metric_label:10}: {result.get_metric(name=metric):.5f}")
 
     # you can also log the final results to wandb if you want
     if wandb:
