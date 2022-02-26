@@ -4,8 +4,7 @@
 
 [This repository](https://github.com/migalkin/ilpc2022) introduces the [ILPC'22 Small](data/small) and [ILPC'22 Large](data/large)
 datasets for benchmarking inductive link prediction models and outlines the 2022
-incarnation of the Inductive Link Prediction Challenge (ILPC) to accompany
-the [KG Course](https://github.com/migalkin/kgcourse2021).
+incarnation of the Inductive Link Prediction Challenge (ILPC).
 
 ## 🗄️ Datasets
 
