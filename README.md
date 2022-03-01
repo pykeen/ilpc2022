@@ -202,3 +202,9 @@ consumption during training is about 2 GB VRAM on the `small` dataset and about
 The code in this package is licensed under the MIT License. The datasets in this
 repository are licensed under the Creative Commons Zero license. The trained
 models and their weights are licensed under the Creative Commons Zero license.
+
+### 🏦 Funding
+
+Mikhail Galkin was supported by the Samsung AI grant held at Mila.
+Max Berrendorf was supported by the German Federal Ministry of Education and Research (BMBF) under Grant No. 01IS18036A.
+Charles Tapley Hoyt was supported by the DARPA Young Faculty Award W911NF20102551.
