@@ -203,8 +203,21 @@ The code in this package is licensed under the MIT License. The datasets in this
 repository are licensed under the Creative Commons Zero license. The trained
 models and their weights are licensed under the Creative Commons Zero license.
 
+### 🎁 Support
+
+This project has been supported by several organizations (in alphabetical order):
+
+- [Harvard Program in Therapeutic Science - Laboratory of Systems Pharmacology](https://hits.harvard.edu/the-program/laboratory-of-systems-pharmacology/)
+- [Ludwig-Maximilians-Universität München](https://www.en.uni-muenchen.de/index.html)
+- [Mila](https://mila.quebec/)
+- [Munich Center for Machine Learning (MCML)](https://mcml.ai/)
+
 ### 🏦 Funding
 
-Mikhail Galkin was supported by the Samsung AI grant held at Mila.
-Max Berrendorf was supported by the German Federal Ministry of Education and Research (BMBF) under Grant No. 01IS18036A.
-Charles Tapley Hoyt was supported by the DARPA Young Faculty Award W911NF20102551.
+The development of PyKEEN has been funded by the following grants:
+
+| Funding Body                                             | Program                                                                          | Grant         |
+|----------------------------------------------------------|----------------------------------------------------------------------------------|---------------|
+| DARPA                                                    | [Young Faculty Award (PI: Benjamin Gyori)](https://indralab.github.io/#projects) | W911NF2010255 |
+| German Federal Ministry of Education and Research (BMBF) | [Munich Center for Machine Learning (MCML)](https://mcml.ai)                     | 01IS18036A    |
+| Samsung                                                  | Samsung AI Grant                                                                 | -             |
