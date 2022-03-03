@@ -214,7 +214,7 @@ This project has been supported by several organizations (in alphabetical order)
 
 ### 🏦 Funding
 
-The development of PyKEEN has been funded by the following grants:
+This project has been funded by the following grants:
 
 | Funding Body                                             | Program                                                                          | Grant         |
 |----------------------------------------------------------|----------------------------------------------------------------------------------|---------------|
