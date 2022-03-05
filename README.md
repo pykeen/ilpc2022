@@ -203,6 +203,23 @@ The code in this package is licensed under the MIT License. The datasets in this
 repository are licensed under the Creative Commons Zero license. The trained
 models and their weights are licensed under the Creative Commons Zero license.
 
+### Citation
+
+If you use the ILPC'22 datasets in your work, please cite the following:
+
+```bibtex
+@article{Galkin2022,
+  archivePrefix = {arXiv},
+  arxivId = {2203.01520},
+  author = {Galkin, Mikhail and Berrendorf, Max and Hoyt, Charles Tapley},
+  eprint = {2203.01520},
+  month = {mar},
+  title = {{An Open Challenge for Inductive Link Prediction on Knowledge Graphs}},
+  url = {http://arxiv.org/abs/2203.01520},
+  year = {2022}
+}
+```
+
 ### 🎁 Support
 
 This project has been supported by several organizations (in alphabetical order):
