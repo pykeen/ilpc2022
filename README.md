@@ -203,7 +203,7 @@ The code in this package is licensed under the MIT License. The datasets in this
 repository are licensed under the Creative Commons Zero license. The trained
 models and their weights are licensed under the Creative Commons Zero license.
 
-### Citation
+### 📖 Citation
 
 If you use the ILPC'22 datasets in your work, please cite the following:
 
