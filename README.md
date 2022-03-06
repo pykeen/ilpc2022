@@ -3,7 +3,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2203.01520-b31b1b)](https://arxiv.org/abs/2203.01520)
 [![Zenodo DOI](https://zenodo.org/badge/460713416.svg)](https://zenodo.org/badge/latestdoi/460713416)
 
-[This repository](https://github.com/migalkin/ilpc2022) introduces the [ILPC'22 Small](data/small) and [ILPC'22 Large](data/large)
+[This repository](https://github.com/pykeen/ilpc2022) introduces the [ILPC'22 Small](data/small) and [ILPC'22 Large](data/large)
 datasets for benchmarking inductive link prediction models and outlines the 2022
 incarnation of the Inductive Link Prediction Challenge (ILPC).
 
