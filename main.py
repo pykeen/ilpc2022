@@ -170,8 +170,18 @@ def main(
     )
 
     # specifying hits@k values: 1, 3, 5, 10, 100
-    valid_evaluator = RankBasedEvaluator(mode=VALIDATION, ks=(1, 3, 5, 10, 100))
-    test_evaluator = RankBasedEvaluator(mode=TESTING, ks=(1, 3, 5, 10, 100))
+    valid_evaluator = RankBasedEvaluator(
+        mode=VALIDATION,
+        metrics=["hits_at_k"]*5,
+        metrics_kwargs=[dict(k=k) for k in (1, 3, 5, 10, 100)],
+        add_defaults=True,
+    )
+    test_evaluator = RankBasedEvaluator(
+        mode=TESTING,
+        metrics=["hits_at_k"] * 5,
+        metrics_kwargs=[dict(k=k) for k in (1, 3, 5, 10, 100)],
+        add_defaults=True
+    )
 
     # model training and eval on validation starts here
     training_loop.train(
